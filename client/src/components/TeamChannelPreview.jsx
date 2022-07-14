@@ -12,12 +12,25 @@ const TeamChannelPreview = ({ channel, type }) => {
     );
     return (
       <div>
-        <Avatar image={members[0].user.image} />
+        <Avatar
+          image={members[0]?.user?.image}
+          name={members[0]?.user?.fullName}
+          size={24}
+        />
+        <p>{members[0]?.user?.fullName}</p>
       </div>
     );
   };
 
-  return <div></div>;
+  return (
+    <div
+      onClick={() => {
+        console.log(channel);
+      }}
+    >
+      {type === "team" ? <ChannelPreview /> : <DirectPreview />}
+    </div>
+  );
 };
 
 export default TeamChannelPreview;
