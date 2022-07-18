@@ -12,13 +12,38 @@ const ChannelContainer = ({
   const { channel } = useChatContext();
 
   if (isCreating) {
-    return;
+    return (
+      <div>
+        <CreateChannel createType={createType} setIsCreating={setIsCreating} />
+      </div>
+    );
   }
 
   if (isEditing) {
-    return;
+    return (
+      <div>
+        <EditChannel setIsEditing={setIsEditing} />
+      </div>
+    );
   }
-  return <div>ChannelContainer</div>;
+
+  const EmptyState = () => (
+    <div>
+      <p>This is the beginning of your chat history</p>
+      <p>Send messages, attachments, links, emojis, and more!</p>
+    </div>
+  );
+
+  return (
+    <div>
+      <Channel
+        EmptyStateIndicator={EmptyState}
+        Message={(messageProps, i) => <TeamMessage key={i} {...messageProps} />}
+      >
+        <ChannelInner setIsEditing={setIsEditing} />
+      </Channel>
+    </div>
+  );
 };
 
 export default ChannelContainer;

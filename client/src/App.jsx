@@ -5,9 +5,12 @@ import styled from "styled-components";
 import Cookies from "universal-cookie";
 import { ChannelContainer, ChannelListContainer, Auth } from "./components";
 
+import "stream-chat-react/dist/css/index.css";
+
 const Wrapper = styled.div`
   display: flex;
 `;
+
 const cookies = new Cookies();
 const apiKey = "q9r9sz27vd6q";
 const authToken = cookies.get("token");
