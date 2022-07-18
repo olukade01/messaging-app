@@ -11,13 +11,13 @@ const LogoWrapper = styled.div`
   align-items: center;
 `;
 
-const SideBar = () => (
+const SideBar = ({ logout }) => (
   <Wrapper>
     <LogoWrapper>
       <LogoutIcon style={{ width: 50 }} />
       <h2>Chat App</h2>
     </LogoWrapper>
-    <LogoutIcon style={{ width: 50 }} />
+    <LogoutIcon onClick={logout} style={{ width: 50 }} />
   </Wrapper>
 );
 

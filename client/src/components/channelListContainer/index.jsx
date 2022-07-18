@@ -15,10 +15,24 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 0 20px 0;
 `;
+
+const cookies = new Cookies();
+
 const ChannelListContainer = () => {
+  const logout = () => {
+    cookies.remove("token");
+    cookies.remove("userId");
+    cookies.remove("fullName");
+    cookies.remove("hashedPassword");
+    cookies.remove("username");
+    cookies.remove("phoneNumber");
+    cookies.remove("avatarURL");
+
+    window.location.reload();
+  };
   return (
     <Wrapper>
-      <SideBar />
+      <SideBar logout={logout} />
       <ChannelSearch />
       <ChannelList
         filters={{}}
