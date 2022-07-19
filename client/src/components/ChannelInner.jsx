@@ -59,11 +59,48 @@ const TeamChannelHeader = ({ setIsEditing }) => {
     const additionalMembers = members.length - 3;
 
     if (channel.type === "messaging") {
-      return;
+      return (
+        <div>
+          {members.map(({ user }, i) => (
+            <div key={i}>
+              <Avatar
+                image={user.image}
+                name={user.fullName || user.id}
+                size={32}
+              />
+              <p>{user.fullName || user.id}</p>
+            </div>
+          ))}
+
+          {additionalMembers > 0 && <p>and {additionalMembers} more</p>}
+        </div>
+      );
     }
 
-    return;
+    return (
+      <div>
+        <p># {channel.data.name}</p>
+        <span style={{ display: "flex" }} onClick={() => setIsEditing(true)}>
+          {/* <ChannelInfo /> */}
+        </span>
+      </div>
+    );
   };
+
+  const getWatcherText = (watchers) => {
+    if (!watchers) return "No users online";
+    if (watchers === 1) return "1 user online";
+    return `${watchers} users online`;
+  };
+
+  return (
+    <div>
+      <MessagingHeader />
+      <div>
+        <p>{getWatcherText(watcher_count)}</p>
+      </div>
+    </div>
+  );
 };
 
 export default ChannelInner;

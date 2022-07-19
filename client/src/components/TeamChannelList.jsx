@@ -1,7 +1,16 @@
-import { UserAddIcon } from "@heroicons/react/outline";
 import React from "react";
+import { AddChannel } from "../assets/AddChannel";
 
-const TeamChannelList = ({ children, error = false, loading, type }) => {
+const TeamChannelList = ({
+  children,
+  error = false,
+  loading,
+  type,
+  isCreating,
+  setIsCreating,
+  setIsEditing,
+  setCreateType,
+}) => {
   if (error) {
     return type === "team" ? (
       <div>
@@ -20,6 +29,13 @@ const TeamChannelList = ({ children, error = false, loading, type }) => {
     <div>
       <div>
         <p>{type === "team" ? "Channels" : "Direct Messages"}</p>
+        <AddChannel
+          type={type === "team" ? "team" : "messaging"}
+          isCreating={isCreating}
+          setIsCreating={setIsCreating}
+          setIsEditing={setIsEditing}
+          setCreateType={setCreateType}
+        />
       </div>
       {children}
     </div>
