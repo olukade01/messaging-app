@@ -7,6 +7,7 @@ import {
   TeamChannelList,
   TeamChannelPreview,
 } from "../";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   background-color: antiquewhite;
@@ -18,7 +19,14 @@ const Wrapper = styled.div`
 
 const cookies = new Cookies();
 
-const ChannelListContainer = ({
+const channelTeamFilter = (channels) => {
+  return channels.filter((channel) => channel.type === "team");
+};
+const channelMessagingFilter = (channels) => {
+  return channels.filter((channel) => channel.type === "messaging");
+};
+
+const ChannelListContent = ({
   isCreating,
   setIsCreating,
   setIsEditing,
@@ -41,7 +49,7 @@ const ChannelListContainer = ({
       <ChannelSearch />
       <ChannelList
         filters={{}}
-        channelRenderFilterFn={() => {}}
+        channelRenderFilterFn={channelTeamFilter}
         List={(listProps) => (
           <TeamChannelList
             {...listProps}
@@ -58,7 +66,7 @@ const ChannelListContainer = ({
       />
       <ChannelList
         filters={{}}
-        channelRenderFilterFn={() => {}}
+        channelRenderFilterFn={channelMessagingFilter}
         List={(listProps) => (
           <TeamChannelList
             {...listProps}
@@ -74,6 +82,31 @@ const ChannelListContainer = ({
         )}
       />
     </Wrapper>
+  );
+};
+
+const ChannelListContainer = ({
+  setCreateType,
+  setIsCreating,
+  setIsEditing,
+}) => {
+  const [toggleContainer, setToggleContainer] = useState(false);
+  return (
+    <>
+      <div>
+        <ChannelListContent
+          setCreateType={setCreateType}
+          setIsCreating={setIsCreating}
+          setIsEditing={setIsEditing}
+        />
+      </div>
+      <div
+        style={{
+          left: toggleContainer ? "0%" : "-89%",
+          backgroundColor: "#005fff",
+        }}
+      ></div>
+    </>
   );
 };
 
