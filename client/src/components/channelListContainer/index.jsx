@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   background-color: antiquewhite;
   flex-direction: column;
   height: 100vh;
-  width: 25%;
+  width: 23%;
   padding: 0 20px 0;
 `;
 
@@ -31,7 +31,9 @@ const ChannelListContent = ({
   setIsCreating,
   setIsEditing,
   setCreateType,
+  setToggleContainer,
 }) => {
+  const { client } = useChatContext();
   const logout = () => {
     cookies.remove("token");
     cookies.remove("userId");
@@ -43,12 +45,13 @@ const ChannelListContent = ({
 
     window.location.reload();
   };
+  const filters = { members: { $in: [client.userID] } };
   return (
-    <Wrapper>
+    <div>
       <SideBar logout={logout} />
       <ChannelSearch />
       <ChannelList
-        filters={{}}
+        filters={filters}
         channelRenderFilterFn={channelTeamFilter}
         List={(listProps) => (
           <TeamChannelList
@@ -58,14 +61,19 @@ const ChannelListContent = ({
             setIsCreating={setIsCreating}
             setIsEditing={setIsEditing}
             setCreateType={setCreateType}
+            setToggleContainer={setToggleContainer}
           />
         )}
         Preview={(previewProps) => (
-          <TeamChannelPreview {...previewProps} type="team" />
+          <TeamChannelPreview
+            {...previewProps}
+            setToggleContainer={setToggleContainer}
+            type="team"
+          />
         )}
       />
       <ChannelList
-        filters={{}}
+        filters={filters}
         channelRenderFilterFn={channelMessagingFilter}
         List={(listProps) => (
           <TeamChannelList
@@ -75,13 +83,18 @@ const ChannelListContent = ({
             setIsCreating={setIsCreating}
             setIsEditing={setIsEditing}
             setCreateType={setCreateType}
+            setToggleContainer={setToggleContainer}
           />
         )}
         Preview={(previewProps) => (
-          <TeamChannelPreview {...previewProps} type="messaging" />
+          <TeamChannelPreview
+            {...previewProps}
+            setToggleContainer={setToggleContainer}
+            type="messaging"
+          />
         )}
       />
-    </Wrapper>
+    </div>
   );
 };
 
@@ -92,7 +105,7 @@ const ChannelListContainer = ({
 }) => {
   const [toggleContainer, setToggleContainer] = useState(false);
   return (
-    <>
+    <Wrapper>
       <div>
         <ChannelListContent
           setCreateType={setCreateType}
@@ -100,13 +113,25 @@ const ChannelListContainer = ({
           setIsEditing={setIsEditing}
         />
       </div>
+      {/* <div
+      style={{
+        left: toggleContainer ? "0%" : "-89%",
+        backgroundColor: "#005fff",
+      }}
+    >
       <div
-        style={{
-          left: toggleContainer ? "0%" : "-89%",
-          backgroundColor: "#005fff",
-        }}
+        onClick={() =>
+          setToggleContainer((prevToggleContainer) => !prevToggleContainer)
+        }
       ></div>
-    </>
+      <ChannelListContent
+        setCreateType={setCreateType}
+        setIsCreating={setIsCreating}
+        setIsEditing={setIsEditing}
+        setToggleContainer={setToggleContainer}
+      />
+    </div> */}
+    </Wrapper>
   );
 };
 
