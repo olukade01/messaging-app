@@ -67,6 +67,8 @@ const ChannelListContent = ({
         Preview={(previewProps) => (
           <TeamChannelPreview
             {...previewProps}
+            setIsCreating={setIsCreating}
+            setIsEditing={setIsEditing}
             setToggleContainer={setToggleContainer}
             type="team"
           />
@@ -89,6 +91,8 @@ const ChannelListContent = ({
         Preview={(previewProps) => (
           <TeamChannelPreview
             {...previewProps}
+            setIsCreating={setIsCreating}
+            setIsEditing={setIsEditing}
             setToggleContainer={setToggleContainer}
             type="messaging"
           />
@@ -114,23 +118,23 @@ const ChannelListContainer = ({
         />
       </div>
       {/* <div
-      style={{
-        left: toggleContainer ? "0%" : "-89%",
-        backgroundColor: "#005fff",
-      }}
-    >
-      <div
-        onClick={() =>
-          setToggleContainer((prevToggleContainer) => !prevToggleContainer)
-        }
-      ></div>
-      <ChannelListContent
-        setCreateType={setCreateType}
-        setIsCreating={setIsCreating}
-        setIsEditing={setIsEditing}
-        setToggleContainer={setToggleContainer}
-      />
-    </div> */}
+        style={{
+          left: toggleContainer ? "0%" : "-89%",
+          backgroundColor: "#005fff",
+        }}
+      >
+        <div
+          onClick={() =>
+            setToggleContainer((prevToggleContainer) => !prevToggleContainer)
+          }
+        ></div>
+        <ChannelListContent
+          setCreateType={setCreateType}
+          setIsCreating={setIsCreating}
+          setIsEditing={setIsEditing}
+          setToggleContainer={setToggleContainer}
+        />
+      </div> */}
     </Wrapper>
   );
 };

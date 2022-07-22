@@ -9,6 +9,7 @@ import {
   useChannelStateContext,
   useChatContext,
 } from "stream-chat-react";
+import { ChannelInfo } from "../assets/ChannelInfo";
 
 export const GiphyContext = React.createContext({});
 
@@ -81,7 +82,7 @@ const TeamChannelHeader = ({ setIsEditing }) => {
       <div>
         <p># {channel.data.name}</p>
         <span style={{ display: "flex" }} onClick={() => setIsEditing(true)}>
-          {/* <ChannelInfo /> */}
+          <ChannelInfo />
         </span>
       </div>
     );

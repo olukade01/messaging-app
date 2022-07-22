@@ -1,6 +1,6 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
-import { getChannel, useChatContext } from "stream-chat-react";
+import { useChatContext } from "stream-chat-react";
 import styled from "styled-components";
 
 const SearchWrapper = styled.div`
@@ -19,11 +19,29 @@ const SearchWrapper = styled.div`
 `;
 
 const ChannelSearch = () => {
+  const { client, setActiveChannel } = useChatContext();
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const [teamChannels, setTeamChannels] = useState([]);
+  const [directChannels, setDirectChannels] = useState([]);
 
   const getChannel = async (text) => {
     try {
+      const channelResponse = client.queryChannels({
+        type: "team",
+        name: { $autocomplete: text },
+        members: { $in: [client.userID] },
+      });
+      const userResponse = client.queryUsers({
+        name: { $autocomplete: text },
+        id: { $ne: client.userID },
+      });
+      const [channels, { users }] = await Promise.all([
+        channelResponse,
+        userResponse,
+      ]);
+      if (channels.length) setTeamChannels(channels);
+      if (users.length) setDirectChannels(users);
     } catch (error) {
       setQuery("");
     }
