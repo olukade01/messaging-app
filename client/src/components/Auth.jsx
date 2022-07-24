@@ -44,7 +44,7 @@ const Auth = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, phoneNumber, avatarURL, password } = form;
-    const URL = "http://localhost:5001/auth";
+    const URL = "https://messaging-pager.herokuapp.com/auth";
     const {
       data: { token, userId, hashedPassword, fullName },
     } = await axios.post(`${URL}/${isSignUp ? "signup" : "login "}`, {

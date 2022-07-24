@@ -2,6 +2,7 @@ import { SearchIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { useChatContext } from "stream-chat-react";
 import styled from "styled-components";
+import { ResultsDropdown } from "./";
 
 const SearchWrapper = styled.div`
   width: 92%;
@@ -18,12 +19,19 @@ const SearchWrapper = styled.div`
   }
 `;
 
-const ChannelSearch = () => {
+const ChannelSearch = ({ setToggleContainer }) => {
   const { client, setActiveChannel } = useChatContext();
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [teamChannels, setTeamChannels] = useState([]);
   const [directChannels, setDirectChannels] = useState([]);
+
+  useEffect(() => {
+    if (!query) {
+      setTeamChannels([]);
+      setDirectChannels([]);
+    }
+  }, [query]);
 
   const getChannel = async (text) => {
     try {
@@ -53,26 +61,43 @@ const ChannelSearch = () => {
     getChannel(e.target.value);
   };
 
+  const setChannel = (channel) => {
+    setQuery("");
+    setActiveChannel(channel);
+  };
+
   return (
-    <SearchWrapper>
-      <SearchIcon width={25} />
-      <input
-        style={{
-          background: "transparent",
-          border: "none",
-          outline: "none",
-          height: "100%",
-          marginLeft: 10,
-          fontSize: 20,
-          width: "100%",
-          // color: "#fff",
-        }}
-        onChange={onSearch}
-        value={query}
-        type="text"
-        placeholder="Search"
-      />
-    </SearchWrapper>
+    <>
+      <SearchWrapper>
+        <SearchIcon width={25} />
+        <input
+          style={{
+            background: "transparent",
+            border: "none",
+            outline: "none",
+            height: "100%",
+            marginLeft: 10,
+            fontSize: 20,
+            width: "100%",
+            // color: "#fff",
+          }}
+          onChange={onSearch}
+          value={query}
+          type="text"
+          placeholder="Search"
+        />
+      </SearchWrapper>
+      {query && (
+        <ResultsDropdown
+          teamChannels={teamChannels}
+          directChannels={directChannels}
+          loading={loading}
+          setChannel={setChannel}
+          setQuery={setQuery}
+          setToggleContainer={setToggleContainer}
+        />
+      )}
+    </>
   );
 };
 

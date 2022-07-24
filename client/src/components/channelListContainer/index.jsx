@@ -49,7 +49,7 @@ const ChannelListContent = ({
   return (
     <div>
       <SideBar logout={logout} />
-      <ChannelSearch />
+      <ChannelSearch setToggleContainer={setToggleContainer} />
       <ChannelList
         filters={filters}
         channelRenderFilterFn={channelTeamFilter}
